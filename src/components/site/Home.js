@@ -1,11 +1,11 @@
 import React from 'react';
-import FetchTest from '../FetchTest'
+import Search from '../search/Search'
 
 const Home = () => {
     return (
         <div className="main">
             <div className="mainDiv">
-                <FetchTest />
+                <Search />
             </div>
         </div>
     );

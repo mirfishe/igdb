@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Link, Switch} from 'react-router-dom';
- import Home from './Home';
+import Home from './Home';
+import Popular from '../search/Popular';
 
 const Sidebar = () => {
     return (
@@ -8,12 +9,15 @@ const Sidebar = () => {
             <div className="sidebar-list-styling">
                 <ul className="sidebar-list list-unstyled">
                     <li><Link to="/">Home</Link></li>
+                    <li><Link to="/popular">Popular</Link></li>
+
                 </ul>
             </div>
             <div className="sidebar-route">
                 <Switch>
                     <Route exact path="/home"><Home /></Route>
                     <Route exact path="/"><Home /></Route>
+                    <Route exact path="/popular"><Popular /></Route>
                 </Switch>
             </div>
         </div>

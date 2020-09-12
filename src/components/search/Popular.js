@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Col, Card, CardBody, CardImg, CardSubtitle, CardTitle, CardText, Form, Row, Container} from 'reactstrap';
-import Game from './search/Game'
+import Game from './Game'
 
-const FetchTest = () => {
+const Popular = () => {
 
     const [searchTerms, setSearchTerms] = useState('');
     const [results, setResults] = useState([]);
@@ -62,7 +62,7 @@ const FetchTest = () => {
 
 
     const fetchGames = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
 
         // https://cors-anywhere.herokuapp.com
         // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
@@ -83,12 +83,19 @@ const FetchTest = () => {
         // const baseURL = testURL;
     
         // Popularity
-        // const popularityURL = "https://api-v3.igdb.com/games";
+        const popularityURL = "https://api-v3.igdb.com/games";
         // const popularityBody = "";
-        // const popularityFields = "fields name, summary, url, popularity; limit 100;";
-        // const popularitySort = " sort popularity desc;";
-        // const baseURL = popularityURL;
-        // const body = popularityBody + " " + popularityFields + " " + popularitySort;
+        // const popularityFields = "fields name, summary, url, popularity;";
+        // const popularityFields = "fields *;";
+        const popularityFields = "fields id,alternative_names.*,name,age_ratings.*,alternative_names.*,artworks.*,bundles.*,collection.*,cover.*,dlcs.*,expansions.*,external_games.*,franchise.*,franchises.*,game_engines.*,game_modes.*,genres.*,involved_companies.*,keywords.*,multiplayer_modes.*,parent_game.*,platforms.*,player_perspectives.*,release_dates.*,screenshots.*,similar_games.*,standalone_expansions.*,themes.*,time_to_beat.*,version_parent.*,videos.*,websites.*;";
+        // const popularityLimit = "limit 50;";
+        // const popularityLimit = "limit 100;";
+        const popularityLimit = "limit 200;";
+        const popularityOffset = "";
+        // const popularityOffset = "offset 10;";
+        const popularitySort = " sort popularity desc;";
+        const baseURL = popularityURL;
+        const body = popularityFields + " " + popularityLimit + " " + popularityOffset + " " + popularitySort;
     
         // Search
         const searchURL = "https://api-v3.igdb.com/search";
@@ -107,8 +114,8 @@ const FetchTest = () => {
         const whereClause = ""
         // const whereClause = "where game = 28540;"
         // const whereClause = "where category = 0;" // Doesn't work?
-        const baseURL = searchURL;
-        const body = search + " " + fields+ " " + whereClause + " " + limit + " " + offset;
+        // const baseURL = searchURL;
+        // const body = search + " " + fields+ " " + whereClause + " " + limit + " " + offset;
     
         // Games
         // const gamesURL = "https://api-v3.igdb.com/games";
@@ -131,9 +138,9 @@ const FetchTest = () => {
         
     };
 
-    // useEffect(() => {
-    //     fetchGames();
-    // }, []);
+    useEffect(() => {
+        fetchGames();
+    }, []);
 
     useEffect(() => {
         console.log(results);
@@ -151,20 +158,17 @@ const FetchTest = () => {
         return (
         // <Col xs="2">
         <>
-        {game.game ?
+        {game ?
             // game.game.category == 0 ?
             // game.game.status != undefined ?
             <Card id={game.id}>
                 <CardBody>
-                {game.game ? coverImage(game.game) : ''}
-                {game.game ? <CardTitle><a href={game.game.url} target="_blank">{game.name}</a></CardTitle>: <CardTitle>{game.name}</CardTitle>}
-                {game.alternative_name && game.alternative_name !== "" ? <CardSubtitle>Alternate {game.alternative_name}</CardSubtitle> : ''}
-                    {/* <Game game={game.game} /> */}
-                    {/* {game.game ? <CardText>{game.game.slug}</CardText> : ''} */}
-                    {/* {game.game ? <CardText><a href={game.game.url} target="_blank">{game.name}</a></CardText> : ''} */}
-                    {game.game ? <CardText>{game.game.category} {getCategoryName(game.game.category)}</CardText> : ''}
-                    {game.game.status != undefined ? <CardText>{game.game.status} {getStatusName(game.game.status)}</CardText> : ''}
-                    {game.game.summary ? <CardText>{game.game.summary}</CardText> : ''}
+                {game ? coverImage(game) : ''}
+                {game ? <CardTitle><a href={game.url} target="_blank">{game.name}</a></CardTitle>: <CardTitle>{game.name}</CardTitle>}
+                {/* {game.alternative_name && game.alternative_name !== "" ? <CardSubtitle>Alternate {game.alternative_name}</CardSubtitle> : ''} */}
+                    {/* {game ? <CardText>{game.category} {getCategoryName(game.category)}</CardText> : ''}
+                    {game.status != undefined ? <CardText>{game.status} {getStatusName(game.status)}</CardText> : ''} */}
+                    {game.summary ? <CardText>{game.summary}</CardText> : ''}
                 </CardBody>
             </Card>
             // : ''
@@ -177,18 +181,14 @@ const FetchTest = () => {
     };
 
     return (
-        <Container>
-        <Row>
-        <Form onSubmit={fetchGames}>
-        <input type="text" id="searchTerms" placeholder="Search Terms" value={searchTerms} onChange={(e) => {/*console.log(e.target.value); */setSearchTerms(e.target.value);}} />
-        <button type="submit">Search</button>
-        </Form>
-        </Row>
+        <div className="main">
+            <div className="mainDiv">
         <Row>
             {results.length > 0 ? results.map(game => card(game)) : ''}
         </Row>
-        </Container>
+        </div>
+        </div>
     );
 };
 
-export default FetchTest;
+export default Popular;
