@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Row} from 'reactstrap';
+import {Col, Card, CardBody, CardTitle, CardText, Row} from 'reactstrap';
 import Game from './search/Game'
 
 const FetchTest = () => {
 
     const [results, setResults] = useState([]);
+    const [game, setGame] = useState({});
 
     const fetchGames = () => {
 
@@ -73,12 +74,30 @@ const FetchTest = () => {
     }, []);
 
     useEffect(() => {
-        // console.log(results);
+        console.log(results);
     }, [results]);
+
+    const card = () => {
+        return (
+            // <Col xs="2">
+                <Card id={results.id}>
+                    <CardTitle>Name {results.name}</CardTitle>
+                    <CardBody>
+                        {/* <CardText>Alternate Name {gameRecord.alternative_name}</CardText>
+                        {gameItem.hasOwnProperty('slug') ? <CardText>Slug {gameItem.slug}</CardText> : ''}
+                        {gameItem.hasOwnProperty('url') ? <CardText>Url {gameItem.url}</CardText> : ''} */}
+                        <CardText>Alternate Name {results.alternative_name}</CardText>
+                        {/* {results.game.hasOwnProperty('slug') ? <CardText>Slug {results.game.slug}</CardText> : ''} */}
+                        {/* {results.game.length > 0 ? results.game.map(game => <Game game={game} />) : ''} */}
+                    </CardBody>
+                </Card>
+            // </Col>
+        );
+    };
 
     return (
         <Row>
-            {results.length > 0 ? results.map(game => <Game game={game} />) : ''}
+            {results.length > 0 ? card() : ''}
         </Row>
     );
 };
