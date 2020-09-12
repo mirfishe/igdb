@@ -1,10 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import {Row} from 'reactstrap';
+import Game from './search/Game'
 
 const FetchTest = () => {
 
+    const [results, setResults] = useState([]);
+
     const fetchGames = () => {
 
-        const apiKey = process.env.API_KEY;
+        // https://cors-anywhere.herokuapp.com
+        // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+        const apiKey = process.env.REACT_APP_API_KEY;
 
         const headers = {
             "Content-Type": "application/json",
@@ -31,9 +39,11 @@ const FetchTest = () => {
         // const searchBody = "search \"LEGO\"; fields alternative_name,character,checksum,collection,company,description,game,name,person,platform,popularity,published_at,test_dummy,theme;";
         // const search = "search \"LEGO\";"
         const search = "search \"" + searchTerms + "\";"
-        const fields = "fields *;";
+        // const fields = "fields *;";
+        const fields = "fields id,alternative_name,name,game.*,game.age_ratings.*,game.franchises.*,game.game_modes.*,game.genres.*,game.involved_companies.*,game.multiplayer_modes.*,game.platforms.*,game.player_perspectives.*,game.release_dates.*,game.similar_games.*,game.themes.*,game.websites;";
         const limit = "limit 50;";
-        const offset = "offset 10;";
+        const offset = "";
+        // const offset = "offset 10;";
         const baseURL = searchURL;
         const body = search + " " + fields + " " + limit + " " + offset;
     
@@ -44,8 +54,7 @@ const FetchTest = () => {
         // const baseURL = gamesURL;
         // const body = gamesBody + " " + gamesFields;
     
-        // https://hackersandslackers.com/making-api-requests-with-nodejs/
-        fetch(baseURL, {
+        fetch(proxyurl + baseURL, {
             method: "POST",
             headers:  headers, // {
             //     'Content-Type': 'application/json',
@@ -54,7 +63,7 @@ const FetchTest = () => {
             body: body
             })
         .then(res => res.json())
-        .then(json => console.log(json))
+        .then(json => {setResults(json);}) // console.log(json);
         .catch(err => console.log(err))
         
     };
@@ -63,10 +72,14 @@ const FetchTest = () => {
         fetchGames();
     }, []);
 
-    return (
-        <div>
+    useEffect(() => {
+        // console.log(results);
+    }, [results]);
 
-        </div>
+    return (
+        <Row>
+            {results.length > 0 ? results.map(game => <Game game={game} />) : ''}
+        </Row>
     );
 };
 

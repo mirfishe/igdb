@@ -1,14 +1,21 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "./App.css";
-import {Container} from 'reactstrap';
-import FetchTest from './components/FetchTest'
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import './App.css';
+import Header from './components/site/Header';
+import Footer from './components/site/Footer';
+import Sidebar from './components/site/Sidebar';
+import { BrowserRouter as Router } from 'react-router-dom';
+require('dotenv').config();
 
-function App() {
+const App = () => {
   return (
-    <Container>
-      <FetchTest />
-    </Container>
+    <div>
+      <Header />
+      <Router>
+        <Sidebar />
+      </Router>
+      <Footer />
+    </div>
   );
 }
 
