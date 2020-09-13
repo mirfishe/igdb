@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Col, Card, CardBody, CardImg, CardSubtitle, CardTitle, CardText, Form, Row, Container} from 'reactstrap';
 import Game from './Game'
 
-const Popular = () => {
+const Recent = () => {
 
     const [searchTerms, setSearchTerms] = useState('');
     const [results, setResults] = useState([]);
@@ -94,8 +94,8 @@ const Popular = () => {
         const popularityOffset = "";
         // const popularityOffset = "offset 10;";
         const popularitySort = " sort popularity desc;";
-        const baseURL = popularityURL;
-        const body = popularityFields + " " + popularityLimit + " " + popularityOffset + " " + popularitySort;
+        // const baseURL = popularityURL;
+        // const body = popularityFields + " " + popularityLimit + " " + popularityOffset + " " + popularitySort;
     
         // Search
         const searchURL = "https://api-v3.igdb.com/search";
@@ -127,8 +127,8 @@ const Popular = () => {
         const recentOffset = "";
         // const recentOffset = "offset 10;";
         const recentSort = "sort date asc;";
-        // const baseURL = recentURL;
-        // const body = recentFields + " " + recentLimit + " " + recentOffset + " " + recentSort;
+        const baseURL = recentURL;
+        const body = recentFields + " " + recentLimit + " " + recentOffset + " " + recentSort;
     
         fetch(proxyurl + baseURL, {
             method: "POST",
@@ -197,4 +197,4 @@ const Popular = () => {
     );
 };
 
-export default Popular;
+export default Recent;

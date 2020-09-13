@@ -83,12 +83,19 @@ const Search = () => {
         // const baseURL = testURL;
     
         // Popularity
-        // const popularityURL = "https://api-v3.igdb.com/games";
+        const popularityURL = "https://api-v3.igdb.com/games";
         // const popularityBody = "";
-        // const popularityFields = "fields name, summary, url, popularity; limit 100;";
-        // const popularitySort = " sort popularity desc;";
+        // const popularityFields = "fields name, summary, url, popularity;";
+        // const popularityFields = "fields *;";
+        const popularityFields = "fields id,alternative_names.*,name,age_ratings.*,alternative_names.*,artworks.*,bundles.*,collection.*,cover.*,dlcs.*,expansions.*,external_games.*,franchise.*,franchises.*,game_engines.*,game_modes.*,genres.*,involved_companies.*,keywords.*,multiplayer_modes.*,parent_game.*,platforms.*,player_perspectives.*,release_dates.*,screenshots.*,similar_games.*,standalone_expansions.*,themes.*,time_to_beat.*,version_parent.*,videos.*,websites.*;";
+        // const popularityLimit = "limit 50;";
+        // const popularityLimit = "limit 100;";
+        const popularityLimit = "limit 200;";
+        const popularityOffset = "";
+        // const popularityOffset = "offset 10;";
+        const popularitySort = " sort popularity desc;";
         // const baseURL = popularityURL;
-        // const body = popularityBody + " " + popularityFields + " " + popularitySort;
+        // const body = popularityFields + " " + popularityLimit + " " + popularityOffset + " " + popularitySort;
     
         // Search
         const searchURL = "https://api-v3.igdb.com/search";
@@ -97,25 +104,31 @@ const Search = () => {
         // const search = "search \"LEGO\";"
         const search = "search \"" + searchTerms + "\";"
         // console.log("search", search);
-        // const fields = "fields *;";
-        const fields = "fields id,alternative_name,name,game.*,game.age_ratings.*,game.alternative_names.*,game.artworks.*,game.bundles.*,game.collection.*,game.cover.*,game.dlcs.*,game.expansions.*,game.external_games.*,game.franchise.*,game.franchises.*,game.game_engines.*,game.game_modes.*,game.genres.*,game.involved_companies.*,game.keywords.*,game.multiplayer_modes.*,game.parent_game.*,game.platforms.*,game.player_perspectives.*,game.release_dates.*,game.screenshots.*,game.similar_games.*,game.standalone_expansions.*,game.themes.*,game.time_to_beat.*,game.version_parent.*,game.videos.*,game.websites.*;";
-        // const limit = "limit 50;";
-        // const limit = "limit 100;";
-        const limit = "limit 200;";
-        const offset = "";
-        // const offset = "offset 10;";
+        // const searchFields = "fields *;";
+        const searchFields = "fields id,alternative_name,name,game.*,game.age_ratings.*,game.alternative_names.*,game.artworks.*,game.bundles.*,game.collection.*,game.cover.*,game.dlcs.*,game.expansions.*,game.external_games.*,game.franchise.*,game.franchises.*,game.game_engines.*,game.game_modes.*,game.genres.*,game.involved_companies.*,game.keywords.*,game.multiplayer_modes.*,game.parent_game.*,game.platforms.*,game.player_perspectives.*,game.release_dates.*,game.screenshots.*,game.similar_games.*,game.standalone_expansions.*,game.themes.*,game.time_to_beat.*,game.version_parent.*,game.videos.*,game.websites.*;";
+        // const searchLimit = "limit 50;";
+        // const searchLimit = "limit 100;";
+        const searchLimit = "limit 200;";
+        const searchOffset = "";
+        // const searchOffset = "offset 10;";
         const whereClause = ""
         // const whereClause = "where game = 28540;"
         // const whereClause = "where category = 0;" // Doesn't work?
         const baseURL = searchURL;
-        const body = search + " " + fields+ " " + whereClause + " " + limit + " " + offset;
+        const body = search + " " + searchFields + " " + whereClause + " " + searchLimit + " " + searchOffset;
     
-        // Games
-        // const gamesURL = "https://api-v3.igdb.com/games";
-        // const gamesBody = "";
-        // const gamesFields = "fields age_ratings,aggregated_rating,aggregated_rating_count,alternative_names,artworks,bundles,category,checksum,collection,cover,created_at,dlcs,expansions,external_games,first_release_date,follows,franchise,franchises,game_engines,game_modes,genres,hypes,involved_companies,keywords,multiplayer_modes,name,parent_game,platforms,player_perspectives,popularity,pulse_count,rating,rating_count,release_dates,screenshots,similar_games,slug,standalone_expansions,status,storyline,summary,tags,themes,time_to_beat,total_rating,total_rating_count,updated_at,url,version_parent,version_title,videos,websites;";
-        // const baseURL = gamesURL;
-        // const body = gamesBody + " " + gamesFields;
+        // Recent Games
+        const recentURL = "https://api-v3.igdb.com/games";
+        // const recentBody = "";
+        const recentFields = "fields id,alternative_names.*,name,age_ratings.*,alternative_names.*,artworks.*,bundles.*,collection.*,cover.*,dlcs.*,expansions.*,external_games.*,franchise.*,franchises.*,game_engines.*,game_modes.*,genres.*,involved_companies.*,keywords.*,multiplayer_modes.*,parent_game.*,platforms.*,player_perspectives.*,release_dates.*,screenshots.*,similar_games.*,standalone_expansions.*,themes.*,time_to_beat.*,version_parent.*,videos.*,websites.*;";
+        // const recentLimit = "limit 50;";
+        // const recentLimit = "limit 100;";
+        const recentLimit = "limit 200;";
+        const recentOffset = "";
+        // const recentOffset = "offset 10;";
+        const recentSort = "sort date asc;";
+        // const baseURL = recentURL;
+        // const body = recentFields + " " + recentLimit + " " + recentOffset + " " + recentSort;
     
         fetch(proxyurl + baseURL, {
             method: "POST",
